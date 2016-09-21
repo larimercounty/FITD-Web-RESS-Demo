@@ -19,4 +19,4 @@ ress-dashboard lives at http://bboard/ress-dashboard
 A similar system to the public visible road closures, RESS Dashboard provides admins additional data on evens, as well as allows them to see status and engagement on recent notifications send from the system, as well as send immediate updates on events.
 
 #Warning: MailCHIMP API Integration Update in the Works
-Some of the API calls used for in RESS-Dashboard will be updated by the end of 2016 to support update to MailChimp v.3 (just saw that v.2 is no longer supported after that)
+Some of the API calls used for in RESS-Dashboard will be updated by the end of 2016 to support update to MailChimp v.3 (just saw that v.2 is no longer supported after that) see [https://apidocs.mailchimp.com/api/]
