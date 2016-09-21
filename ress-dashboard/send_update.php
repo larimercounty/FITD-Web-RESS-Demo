@@ -1,6 +1,9 @@
 <?php
 
+<<<<<<< HEAD
 $MAILCHIMP_API_KEY = '<set api key>';
+=======
+>>>>>>> origin
 // send_update.php
 
 ini_set('display_errors',1);
@@ -21,7 +24,11 @@ include "vendor/MailChimp.php";
 
 //set API KEY
 
+<<<<<<< HEAD
 $MailChimp = new \Drewm\MailChimp($MAILCHIMP_API_KEY);
+=======
+$MailChimp = new \Drewm\MailChimp('692ce84c65ebc57f8428ba2342fd2410-us11');
+>>>>>>> origin
 
 $errors = array();  // array to hold validation errors
 $data = array();    // array to pass back data to the browser
@@ -85,6 +92,7 @@ $event_content = '
 
 
 //Priority Mailer
+<<<<<<< HEAD
 
 //Example update variables as indicated
 
@@ -97,6 +105,13 @@ $new_priority_campaign=
         '/campaigns/create', 
         array('cid'=>$CAMPAIGN_PARENT_ID,'type'=>'regular','options'=>
             array('list_id'=>$SUBSCRIBER_LIST_ID,'subject'=>'Event Update:'.$title.($alias ? ' ('.$alias.')' : ''),'from_email'=>'noreply@larimer.org','from_name'=>'Larimer County','template_id'=>'120101', 'folder_id'=>'3957'),
+=======
+$new_priority_campaign=
+    $MailChimp->call(
+        '/campaigns/create', 
+        array('cid'=>'d910588800','type'=>'regular','options'=>
+            array('list_id'=>'7e02f567f2','subject'=>'Event Update:'.$title.($alias ? ' ('.$alias.')' : ''),'from_email'=>'noreply@larimer.org','from_name'=>'Larimer County','template_id'=>'120101', 'folder_id'=>'3957'),
+>>>>>>> origin
                 'content'=>array('sections'=>
                     array('eventmessage'=>$event_content)
                  )
@@ -105,7 +120,30 @@ $new_priority_campaign=
 
 $MailChimp->call('/campaigns/send', array('cid'=>$new_priority_campaign['id']));
 
+<<<<<<< HEAD
 }
  echo json_encode($data);
 
 ?>
+=======
+/*
+//Citizen Mailer
+$new_campaign=
+    $MailChimp->call(
+        '/campaigns/create', 
+        array('cid'=>'d910588800','type'=>'regular','options'=>
+            array('list_id'=>'5f3e586310','subject'=>'Event Update:'.$title.($alias ? ' ('.$alias.')' : ''),'from_email'=>'noreply@larimer.org','from_name'=>'Larimer County','template_id'=>'120101', 'folder_id'=>'3957'),
+                'content'=>array('sections'=>
+                    array('eventmessage'=>$event_content)
+                 )
+            )
+        );
+
+$MailChimp->call('/campaigns/send', array('cid'=>$new_campaign['id']));
+
+*/
+}
+ echo json_encode($data);
+
+?>
+>>>>>>> origin

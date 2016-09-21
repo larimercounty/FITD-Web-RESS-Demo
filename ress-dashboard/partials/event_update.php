@@ -36,7 +36,11 @@ error_reporting(-1);
 //set up php file
 include "../vendor/MailChimp.php";
 //set API KEY
+<<<<<<< HEAD
 $MailChimp = new \Drewm\MailChimp('replace_w_key');
+=======
+$MailChimp = new \Drewm\MailChimp('692ce84c65ebc57f8428ba2342fd2410-us11');
+>>>>>>> origin
 //Main RESS List
 $citizen_groups = $MailChimp->call('lists/interest-groupings', array('id'=>'5f3e586310','counts'=>1));
 //loading known keys for existing RESS List / Interest Group
@@ -99,4 +103,8 @@ $priority_subscribers = ($priority_list['data'][$p_list_key]['stats']['member_co
         <button ng-click="submitForm()">Confirmed - Now Send Update</button>
     </div></div>
 </form>
+<<<<<<< HEAD
 </div>
+=======
+</div>
+>>>>>>> origin

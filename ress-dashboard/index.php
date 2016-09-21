@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 // SET Contants 
@@ -24,6 +25,9 @@ $LIST_INDEX = '<update with index in list>';
 
 
 
+=======
+<?php 
+>>>>>>> origin
 // had to add array_column - not in PHP < 5.5
 if (! function_exists('array_column')) {
     function array_column(array $input, $columnKey, $indexKey = null) {
@@ -103,6 +107,7 @@ error_reporting(-1);
 
 //set up dependent Mailchimp.php file
 include "vendor/MailChimp.php";
+<<<<<<< HEAD
 //set API KEY // Hidden in the REPO // User your key here
 $MailChimp = new \Drewm\MailChimp($MAILCHIMP_API_KEY);
 //Main RESS List
@@ -111,23 +116,45 @@ $citizen_groups = $MailChimp->call('lists/interest-groupings', array('id'=>$CITI
 //get recent report info
 //when generating automated reports they stem from a parent.. 
 $recent_report = $MailChimp->call('campaigns/list',array('filters'=>array('parent_id'=>$CAMPAIGN_PARENT_ID,'status'=>'sent')))['data'][0];
+=======
+//set API KEY
+$MailChimp = new \Drewm\MailChimp('692ce84c65ebc57f8428ba2342fd2410-us11');
+//Main RESS List
+$citizen_groups = $MailChimp->call('lists/interest-groupings', array('id'=>'5f3e586310','counts'=>1));
+
+//get recent report info
+//when generating automated reports they stem from a parent.. 
+$recent_report = $MailChimp->call('campaigns/list',array('filters'=>array('parent_id'=>'322781','status'=>'sent')))['data'][0];
+>>>>>>> origin
 $citizen_report = $MailChimp->call('reports/share',array('cid'=>$recent_report['id']))['secure_url'];
 //loading known keys for existing RESS List / Interest Group
 
 //Many different groups in citizen list - letting them use one mailchimp id to to manage these subscriptions
 // First grab list by key
+<<<<<<< HEAD
 $lists_key = array_search($LIST_INDEX, array_column($citizen_groups,'id'));
 
 //Next grab the sub group using group_id and count subscribers
 $group_key = array_search($group_id, array_column($citizen_groups[$lists_key]['groups'],'id'));
+=======
+$lists_key = array_search('6565', array_column($citizen_groups,'id'));
+
+//Next grab the sub group using group_id and count subscribers
+$group_key = array_search('22673', array_column($citizen_groups[$lists_key]['groups'],'id'));
+>>>>>>> origin
 $ress_subscribers = $citizen_groups[$lists_key]['groups'][$group_key]['subscribers'];
 
 //Priority List
 //We also have a list of priority partners we notify
 //This is a direct call to a list with no group
 //grab count of priority subscribers
+<<<<<<< HEAD
 $priority_list = $MailChimp->call('lists/list', array('id'=>$CITIZEN_GROUPS,'counts'=>1));
 $p_list_key = array_search($PRIORITY_LIST_ID, array_column($priority_list['data'],'id'));
+=======
+$priority_list = $MailChimp->call('lists/list', array('id'=>'5f3e586310','counts'=>1));
+$p_list_key = array_search('7e02f567f2', array_column($priority_list['data'],'id'));
+>>>>>>> origin
 $priority_subscribers = ($priority_list['data'][$p_list_key]['stats']['member_count']);
 
 ?>
@@ -189,4 +216,8 @@ Subscribers: <span style='display:inline-block;'>Larimer Citizens (<?php echo $r
 </div>
 
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> origin

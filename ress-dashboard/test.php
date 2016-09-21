@@ -29,4 +29,8 @@ $config = [
 
 $ad = new \Adldap\Adldap($config);
 
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> origin

@@ -59,4 +59,8 @@ header("Content-Type: application/rss+xml; charset=UTF-8");
  </rss>
  <?php 
  	} //end feedcheck
+<<<<<<< HEAD
  ?>
+=======
+ ?>
+>>>>>>> origin
