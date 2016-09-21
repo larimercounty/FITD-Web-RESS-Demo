@@ -39,7 +39,7 @@ include "../vendor/MailChimp.php";
 <<<<<<< HEAD
 $MailChimp = new \Drewm\MailChimp('replace_w_key');
 =======
-$MailChimp = new \Drewm\MailChimp('692ce84c65ebc57f8428ba2342fd2410-us11');
+$MailChimp = new \Drewm\MailChimp('<Mail Chimp API KEY>');
 >>>>>>> origin
 //Main RESS List
 $citizen_groups = $MailChimp->call('lists/interest-groupings', array('id'=>'5f3e586310','counts'=>1));
