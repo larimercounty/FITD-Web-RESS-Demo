@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!--
+-------------------------------------------------------------------------
+Document:	index.html for projects page
+Author:		Gregg Turnbull
+Purpose:	This page is built to showcase AngularJS App reading ESRI Rest API
+-------------------------------------------------------------------------- 
+-->
+<html xmlns:ng="http://angularjs.org">
+<head>
+<title>Larimer County Transportation Construction Projects</title>
+<meta name="keywords" content="roads, closures, road closure">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="description" content="List of road closures in Larimer County">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<!--[if lt IE 9]>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.js"></script>
+ <style type='text/css'>
+	.eventmapfeature {display: none !important;}
+ </style>
+<![endif]-->
+ <!--[if lt IE 8]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.js"></script>
+      <script type="text/javascript">
+    		$(document).ready(function() {
+        		angular.bootstrap(document);
+    		});
+	  </script>
+ <![endif]-->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular-resource.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.5.1/js/ngDialog.min.js"></script>
+
+<script src="project_data.js"></script>
+<script src="angular-tablesort/js/angular-tablesort.js"></script>
+<link rel="stylesheet" type="text/css" href="angular-tablesort/tablesort.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.5.1/css/ngDialog.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.5.1/css/ngDialog-theme-default.css">
+<link rel="stylesheet" type="text/css" href="projects.css">
+</script>
+</head>
+<body ng-app="projectEvents" id="ng-app">
+<!-- #include file="/common/standard_header.inc" -->
+
+<div class="path">&gt;<a href="/depts/">Departments</a> &gt; <a href="/roads/">Road and Bridge</a> &gt; Road Closures</div>
+
+<h1>Transportation Construction Projects</h1>
+<h2 style="margin-top:-15px;">Select the project you are interested in from the list below:</h2>
+
+<!--<img src="road_construction.gif" width="100" height="100" alt="" border="0" class="fltlt">-->
+<div class="map-container" >
+<iframe width="500" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="Larimer County Road and Bridge Event Map" src="http://larimercounty.maps.arcgis.com/apps/Embed/index.html?webmap=29fa858ebeeb43a0b4fa34acc1d2c8b1&amp;extent=-105.762,40.3337,-104.7478,40.747&amp;home=true&amp;zoom=true&amp;scale=true&amp;legend=true&amp;disable_scroll=true&amp;theme=light"></iframe>
+</div>
+
+<div ng-controller="ProjectsController">
+<p ng-show="!(events.length)">No projects to Report</p> 
+<table class="table stdtable eventtable" id="projects_table" ng-hide="!(events.length)" ts-wrapper>
+	<thead>
+		<tr>
+			<th class='eventmapfeature'><i class="fa fa-map-marker"></i></th>
+			<th>Project Link</th>
+			<th>Project Description</th>
+			<th width="60px" ts-criteria="attributes.COUNTYROADNUMBER |lowercase" ts-default>Road</th>
+			<th>From</th>
+			<th>To</th>
+			<th width="95px" ts-criteria="attributes.STARTDATE">Start Date</th>
+			<!--<th width="85px" ts-criteria="attributes.ENDDATE">End Date</th>
+			<th style="width:120px">Contact</th>
+			<th ts-criteria="attributes.EVENTTYPE |lowercase">Type</th>
+			<th>Last Updated</th>
+			-->
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="event in events" ts-repeat>
+			<td id="event_{{event.attributes.OBJECTID}}" class='eventmapfeature'>
+			<a class="mapclick" data-ng-click="clickToOpen(event)"><i class="fa fa-map"></i></a>
+			</td>
+			<td><a target="_blank" ng-if="event.attributes.LINK1 && !(event.attributes.LINK1=='Not Available')" href="{{event.attributes.LINK1}}" title="{{event.attributes.LINK1}}" class='projectlink'><i class="fa fa-external-link-square"></i></a></td>
+			<td>{{event.attributes.PROJECTDESCRIPTION }}
+			<div class="eventlinks" ng-if="(event.attributes.LINK2 && !(event.attributes.LINK2=='Not Available') || (event.attributes.LINK3 && !(event.attributes.LINK3=='Not Available')">
+			<em>Additional Links:</em> 
+				<a target="_blank" ng-if="event.attributes.LINK2 && !(event.attributes.LINK2=='Not Available')" href="{{event.attributes.LINK2}}" title="{{event.attributes.LINK2}}"><i class="fa fa-external-link-square"></i></a>
+				<a target="_blank" ng-if="event.attributes.LINK3 && !(event.attributes.LINK3=='Not Available')" href="{{event.attributes.LINK3}}" title="{{event.attributes.LINK3}}"><i class="fa fa-external-link-square"></i></a>
+			</div>
+			</td>
+			<td width="60px">{{event.attributes.COUNTYROADNUMBER}}<span ng-if="event.attributes.COUNTYROADALIAS && event.attributes.COUNTYROADALIAS != 'Unknown'"><br />({{event.attributes.COUNTYROADALIAS}})</span></td>
+			<td>{{event.attributes.FROMCRALIAS}}</td>
+			<td>{{event.attributes.TOCRALIAS}}</td>
+			<td>{{event.attributes.STARTDATE | date:'MM/dd/yyyy'}}</td>
+			<!--<td ng-if="event.attributes.ENDDATE > 0 && event.attributes.ENDDATE < 7855132400000">{{event.attributes.ENDDATE | date:'MM/dd/yyyy'}}</td>
+			<td ng-if="event.attributes.ENDDATE <= 0 || event.attributes.ENDDATE > 7855132400000">TBD</td>
+			<td style="width:120px">{{event.attributes.CONTACTNAME}}<br />
+				{{event.attributes.CONTACTPHONE}}</td>
+			<td>{{event.attributes.LAST_EDITED_DATE  | date:'MM/dd/yyyy'}}</td>-->
+
+		</tr>
+	</tbody>
+</table>
+</div>
+<!-- #include file="/common/standard_footer.inc" -->
+</body>
+</html>
